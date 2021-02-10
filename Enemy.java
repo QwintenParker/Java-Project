@@ -9,8 +9,6 @@ public class Enemy {
     public Character character;
     private int enemyGoX;
     private int enemyGoY;
-    //public double nX;
-    //public double nY;
     public double xH;
     public double yH;
     public int startEnemy;

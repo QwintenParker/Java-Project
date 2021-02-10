@@ -22,7 +22,7 @@ public class MyPanel extends JPanel implements MouseListener {
     public MyPanel(double x, double y) throws IOException {
         this.frameWidth = x;
         this.frameHeight = y;
-        this.character = new Character(200, 200);
+        this.character = new Character(frameWidth/2 - 50, frameHeight/2 - 50);
         this.object = new Objects(200, 300);
         this.object1 = new Objects(400, 600);
         this.object2 = new Objects(475, 400);
@@ -56,12 +56,8 @@ public class MyPanel extends JPanel implements MouseListener {
         character.update(dt);
         enemy1.update(dt);
         enemy2.update(dt);
-        //character.updateDamage(enemy1);
-        //character.updateDamage(enemy2);
         enemy1.updateDamage(previousWorldUpdateTime);
         enemy2.updateDamage(previousWorldUpdateTime);
-        //enemy.search(eX, eY);
-        //enemy.updateEnemy(dt, eX, eY);
         object.update(character.x, character.y);
         object1.update(character.x, character.y);
         object2.update(character.x, character.y);
@@ -71,7 +67,6 @@ public class MyPanel extends JPanel implements MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        //enemy.start();
         object.open(e, (int) character.x, (int) character.y);
         object1.open(e, (int) character.x, (int) character.y);
         object2.open(e, (int) character.x, (int) character.y);
@@ -79,10 +74,6 @@ public class MyPanel extends JPanel implements MouseListener {
         eY = e.getY();
         character.damage(enemy1, e);
         character.damage(enemy2, e);
-        //enemy.search(e.getX(), e.getY());
-
-        //System.out.println(enemy.nX + ", " + enemy.nY);
-
     }
 
     @Override

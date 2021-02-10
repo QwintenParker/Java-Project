@@ -10,33 +10,37 @@ public class Character {
     public File img1 = new File("failed.png");
     public double x;
     public double y;
+    public double canMoveX;
+    public double canMoveY;
     public double xRunningSpeed;
     public double yRunningSpeed;
     public int runningX;
     public int runningY;
     public double characterHealth;
     public boolean canHit;
-    public boolean movesW;
-    public boolean movesA;
-    public boolean movesS;
-    public boolean movesD;
     public BufferedImage gameOverImage;
+    public boolean worldRunL;
+    public boolean worldRunR;
+    public boolean worldRunU;
+    public boolean worldRunD;
 
 
     public Character(double x, double y) throws IOException {
         this.x = x;
         this.y = y;
+        this.canMoveX = x - 50;
+        this.canMoveY = y - 50;
         this.xRunningSpeed = 0.2;
         this.yRunningSpeed = 0.2;
         this.runningX = 0;
         this.runningY = 0;
         this.characterHealth = 100;
         this.canHit = false;
-        this.movesW = false;
-        this.movesA = false;
-        this.movesS = false;
-        this.movesD = false;
         this.gameOverImage = ImageIO.read(img1);
+        this.worldRunL = false;
+        this.worldRunR = false;
+        this.worldRunU = false;
+        this.worldRunD = false;
     }
 
     public void draw(Graphics g) {
@@ -94,43 +98,41 @@ public class Character {
         }
     }
 
-    /*public void checkObjects(double x, double y, double width, double height) {
-        if (this.x >= x && this.x <= x + width && this.y + 50 >= y && this.y <= y + height) {
-            movesA = true;
-            this.x = x + width;
-        }
 
-        if (this.x + 50 >= x && this.x + 50 <= x + width && this.y + 50 >= y && this.y <= y + height) {
-            movesD = true;
-            this.x = x;
-        }
-
-        if (this.x + 48 >= x && this.x <= x + width && this.y >= y && this.y <= y + height) {
-            movesW = true;
-            this.y = y + height;
-        }
-
-        if (this.x + 50 >= x && this.x <= x + width && this.y + 50 >= y && this.y + 50 <= y + height) {
-            movesS = true;
-            this.y = y;
-        }
-    }*/
 
     public void update(long dt) {
+        if (x <= canMoveX) {
+            this.stopRunningLeft();
+            worldRunL = true;
+        } else {
+            worldRunL = false;
+        }
+
+        if (x + 50 >= canMoveX + 150) {
+            this.stopRunningRight();
+            worldRunL = true;
+        } else {
+            worldRunL = false;
+        }
+
+        if (y <= canMoveY) {
+            this.stopRunningUp();
+            worldRunU = true;
+        } else {
+            worldRunU = false;
+        }
+
+        if ( y + 50 >= canMoveY + 150) {
+            this.stopRunningDown();
+            worldRunD = true;
+        } else {
+            worldRunD = false;
+        }
 
         x += dt * xRunningSpeed * runningX;
         y += dt * yRunningSpeed * runningY;
     }
 
-    /*public void updateDamage(Enemy enemy) {
-        if ((x - 5 <= enemy.x + 35 && x + 55 >= enemy.x) && (y - 5 <= enemy.y + 35 && y + 55 >= enemy.y)) {
-            // enemy.drawHealth = true;
-            canHit = true;
-        } else {
-            canHit = false;
-        }
-
-    }*/
 
     public void damage(Enemy enemy, MouseEvent e) {
         if (e.getX() >= enemy.x && e.getX() <= enemy.x + 40 && e.getY() >= enemy.y && e.getY() <= enemy.y + 40) {
