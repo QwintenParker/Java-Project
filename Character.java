@@ -19,7 +19,7 @@ public class Character {
     public double characterHealth;
     public boolean canHit;
     public BufferedImage gameOverImage;
-    public boolean worldRunL;
+    public boolean worldRunL = true;
     public boolean worldRunR;
     public boolean worldRunU;
     public boolean worldRunD;
@@ -37,10 +37,9 @@ public class Character {
         this.characterHealth = 100;
         this.canHit = false;
         this.gameOverImage = ImageIO.read(img1);
-        this.worldRunL = false;
-        this.worldRunR = false;
-        this.worldRunU = false;
-        this.worldRunD = false;
+        this.worldRunR = true;
+        this.worldRunU = true;
+        this.worldRunD = true;
     }
 
     public void draw(Graphics g) {
@@ -100,8 +99,8 @@ public class Character {
 
 
 
-    public void update(long dt) {
-        if (x <= canMoveX) {
+    public void update(long dt, Walls walls) {
+        /*if (x <= canMoveX) {
             this.stopRunningLeft();
             worldRunL = true;
         } else {
@@ -127,10 +126,11 @@ public class Character {
             worldRunD = true;
         } else {
             worldRunD = false;
-        }
+        }*/
 
-        x += dt * xRunningSpeed * runningX;
-        y += dt * yRunningSpeed * runningY;
+        walls.wallsMoves(dt);
+        //x += dt * xRunningSpeed * runningX;
+        //y += dt * yRunningSpeed * runningY;
     }
 
 

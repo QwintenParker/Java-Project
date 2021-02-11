@@ -22,8 +22,8 @@ public class Enemy {
         this.y = y;
         this.xH = x + 10;
         this.yH = y - 10;
-        this.enemySpeedX = 0.12;
-        this.enemySpeedY = 0.12;
+        this.enemySpeedX = 0.1;
+        this.enemySpeedY = 0.1;
         this.character = character;
         this.enemyGoX = 0;
         this.enemyGoY = 0;
@@ -73,12 +73,23 @@ public class Enemy {
             enemyGoY = 0;
         }
 
-        if (character.x > x - 300 && character.x < x + 340 && character.y > y - 300 && character.y < y + 340) {
+        if (character.x > x - 200 && character.x < x + 240 && character.y > y - 200 && character.y < y + 240) {
             x += enemyGoX * enemySpeedX * dt;
             y += enemyGoY * enemySpeedY * dt;
             xH += enemyGoX * enemySpeedX * dt;
             yH += enemyGoY * enemySpeedY * dt;
             drawHealth = true;
+            xH -= character.runningX * character.xRunningSpeed * dt;
+            yH -= character.runningY * character.yRunningSpeed * dt;
+            x -= character.runningX * character.xRunningSpeed * dt;
+            y -= character.runningY * character.yRunningSpeed * dt;
+
+        } else {
+            x -= character.runningX * character.xRunningSpeed * dt;
+            y -= character.runningY * character.yRunningSpeed * dt;
+            xH -= character.runningX * character.xRunningSpeed * dt;
+            yH -= character.runningY * character.yRunningSpeed * dt;
+
         }
     }
 

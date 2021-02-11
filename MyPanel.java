@@ -31,13 +31,14 @@ public class MyPanel extends JPanel implements MouseListener {
         this.walls0 = new Walls(character);
         this.previousWorldUpdateTime = System.currentTimeMillis();
         this.addMouseListener(this);
+        walls0.createWallsSquare();
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        walls0.createWallsSquare(g);
+        walls0.drawWalls(g);
         character.draw(g);
         object.draw(g);
         object1.draw(g);
@@ -53,7 +54,8 @@ public class MyPanel extends JPanel implements MouseListener {
         long currentTime = System.currentTimeMillis();
         long dt = currentTime - previousWorldUpdateTime;
 
-        character.update(dt);
+        character.update(dt, walls0);
+        //walls0.wallsMoves(dt);
         enemy1.update(dt);
         enemy2.update(dt);
         enemy1.updateDamage(previousWorldUpdateTime);
