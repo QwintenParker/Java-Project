@@ -19,10 +19,14 @@ public class Character {
     public double characterHealth;
     public boolean canHit;
     public BufferedImage gameOverImage;
-    public boolean worldRunL = true;
+    public boolean worldRunL = false;
     public boolean worldRunR;
     public boolean worldRunU;
     public boolean worldRunD;
+    public boolean wallL;
+    public boolean wallR;
+    public boolean wallU;
+    public boolean wallD;
 
 
     public Character(double x, double y) throws IOException {
@@ -37,9 +41,13 @@ public class Character {
         this.characterHealth = 100;
         this.canHit = false;
         this.gameOverImage = ImageIO.read(img1);
-        this.worldRunR = true;
-        this.worldRunU = true;
-        this.worldRunD = true;
+        this.worldRunR = false;
+        this.worldRunU = false;
+        this.worldRunD = false;
+        this.wallL = false;
+        this.wallR = false;
+        this.wallU = false;
+        this.wallD = false;
     }
 
     public void draw(Graphics g) {
@@ -100,37 +108,11 @@ public class Character {
 
 
     public void update(long dt, Walls walls) {
-        /*if (x <= canMoveX) {
-            this.stopRunningLeft();
-            worldRunL = true;
-        } else {
-            worldRunL = false;
-        }
-
-        if (x + 50 >= canMoveX + 150) {
-            this.stopRunningRight();
-            worldRunL = true;
-        } else {
-            worldRunL = false;
-        }
-
-        if (y <= canMoveY) {
-            this.stopRunningUp();
-            worldRunU = true;
-        } else {
-            worldRunU = false;
-        }
-
-        if ( y + 50 >= canMoveY + 150) {
-            this.stopRunningDown();
-            worldRunD = true;
-        } else {
-            worldRunD = false;
-        }*/
-
         walls.wallsMoves(dt);
-        //x += dt * xRunningSpeed * runningX;
-        //y += dt * yRunningSpeed * runningY;
+    }
+
+    public void open(MouseEvent e, Walls walls) {
+        walls.open(e);
     }
 
 

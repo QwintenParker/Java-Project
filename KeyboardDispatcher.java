@@ -15,63 +15,42 @@ public class KeyboardDispatcher implements KeyEventDispatcher {
         if (e.getID() == KeyEvent.KEY_PRESSED) {
 
             if (e.getKeyCode() == KeyEvent.VK_A) {
-                if (panel.character.worldRunL) {
-                    panel.character.startRunningLeft();
-                    panel.character.worldRunR = true;
-                } else {
-                    panel.character.stopRunningLeft();
-                }
-
-                //panel.walls0.startRunningLeft();
-            } else if (e.getKeyCode() == KeyEvent.VK_D) {
-                if (panel.character.worldRunR) {
-                    panel.character.startRunningRight();
                     panel.character.worldRunL = true;
-                } else {
-                    panel.character.stopRunningRight();
-                }
+                panel.character.worldRunR = false;
+                    panel.character.wallR = false;
+            } else
 
-                //panel.walls0.startRunningRight();
-            } else if (e.getKeyCode() == KeyEvent.VK_W) {
-                if (panel.character.worldRunU) {
-                    panel.character.startRunningUp();
-                    panel.character.worldRunD = true;
-                } else {
-                    panel.character.stopRunningUp();
-                }
+            if (e.getKeyCode() == KeyEvent.VK_D) {
+                    panel.character.worldRunR = true;
+                panel.character.worldRunL = false;
+                    panel.character.wallL = false;
+            } else
 
-                //panel.walls0.startRunningUp();
-            } else if (e.getKeyCode() == KeyEvent.VK_S) {
-                if (panel.character.worldRunD) {
-                    panel.character.startRunningDown();
+            if (e.getKeyCode() == KeyEvent.VK_W) {
                     panel.character.worldRunU = true;
-                } else {
-                    panel.character.stopRunningDown();
-                }
+                panel.character.worldRunD = false;
+                    panel.character.wallD = false;
+            } else
 
-                //panel.walls0.startRunningDown();
+            if (e.getKeyCode() == KeyEvent.VK_S) {
+                    panel.character.worldRunD = true;
+                panel.character.worldRunU = false;
+                    panel.character.wallU = false;
             }
         }
 
         if (e.getID() == KeyEvent.KEY_RELEASED) {
             if (e.getKeyCode() == KeyEvent.VK_A) {
-                panel.character.stopRunningLeft();
-                //panel.walls0.stopRunningLeft();
+                panel.character.worldRunL = false;
             } else if (e.getKeyCode() == KeyEvent.VK_D) {
-                panel.character.stopRunningRight();
-                //panel.walls0.stopRunningRight();
+                panel.character.worldRunR = false;
             } else if (e.getKeyCode() == KeyEvent.VK_W) {
-                panel.character.stopRunningUp();
-                //panel.walls0.stopRunningUp();
+                panel.character.worldRunU = false;
             } else if (e.getKeyCode() == KeyEvent.VK_S) {
-                panel.character.stopRunningDown();
-                //panel.walls0.stopRunningDown();
+                panel.character.worldRunD = false;
             }
         }
 
-        /*if (e.getKeyCode() == KeyEvent.VK_G) {
-            panel.enemy.startRun();
-        }*/
 
         return false;
     }

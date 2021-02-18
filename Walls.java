@@ -1,9 +1,11 @@
 import java.awt.*;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 public class Walls {
 
     public ArrayList<Wall> walls = new ArrayList<Wall>();
+    public ArrayList<Objects> objects = new ArrayList<>();
     public Character character;
     public int runningX;
     public int runningY;
@@ -12,46 +14,6 @@ public class Walls {
         this.runningX = 0;
         this.runningY = 0;
     }
-
-    /*public void startRunningLeft() {
-        runningX = 1;
-    }
-
-    public void startRunningRight() {
-        runningX = -1;
-    }
-
-    public void startRunningDown() {
-        runningY = -1;
-    }
-
-    public void startRunningUp() {
-        runningY = 1;
-    }
-
-    public void stopRunningLeft() {
-        if (runningX == -1) {
-            runningX = 0;
-        }
-    }
-
-    public void stopRunningRight() {
-        if (runningX == 1) {
-            runningX = 0;
-        }
-    }
-
-    public void stopRunningDown() {
-        if (runningY == 1) {
-            runningY = 0;
-        }
-    }
-
-    public void stopRunningUp() {
-        if (runningY == -1) {
-            runningY = 0;
-        }
-    }*/
 
     public void createWallsSquare() {
 
@@ -76,6 +38,12 @@ public class Walls {
         }
     }
 
+    public void createObjects() {
+        objects.add(new Objects(200, 300, character));
+        objects.add(new Objects(400, 600, character));
+        objects.add(new Objects(475, 400, character));
+    }
+
 
     public void drawWalls(Graphics g) {
         for (int i = 0; i < walls.size(); i++) {
@@ -83,11 +51,27 @@ public class Walls {
         }
     }
 
+    public void drawObjects(Graphics g) {
+        for (int i = 0; i < objects.size(); i++) {
+            (objects.get(i)).draw(g);
+        }
+    }
+
 
 
     public void wallsMoves(long dt) {
         for (int i = 0; i < walls.size(); i++) {
-            (walls.get(i)).update(this, dt);
+            (walls.get(i)).update(dt);
+        }
+
+        for (int i = 0; i < objects.size(); i++) {
+            (objects.get(i)).update(dt);
+        }
+    }
+
+    public void open(MouseEvent e) {
+        for (int i = 0; i < objects.size(); i++) {
+            (objects.get(i)).open(e);
         }
     }
 

@@ -7,31 +7,24 @@ import java.io.IOException;
 public class MyPanel extends JPanel implements MouseListener {
 
     public Character character;
-    public Objects object;
-    public Objects object1;
-    public Objects object2;
     public Enemy enemy1;
     public Enemy enemy2;
     private long previousWorldUpdateTime;
     private double frameWidth;
     private double frameHeight;
-    public double eX;
-    public double eY;
     public Walls walls0;
 
     public MyPanel(double x, double y) throws IOException {
         this.frameWidth = x;
         this.frameHeight = y;
         this.character = new Character(frameWidth/2 - 50, frameHeight/2 - 50);
-        this.object = new Objects(200, 300);
-        this.object1 = new Objects(400, 600);
-        this.object2 = new Objects(475, 400);
         this.enemy1 = new Enemy((double) 700, (double) 700, character);
         this.enemy2 = new Enemy(120, 700, character);
         this.walls0 = new Walls(character);
         this.previousWorldUpdateTime = System.currentTimeMillis();
         this.addMouseListener(this);
         walls0.createWallsSquare();
+        walls0.createObjects();
     }
 
     @Override
@@ -40,9 +33,7 @@ public class MyPanel extends JPanel implements MouseListener {
 
         walls0.drawWalls(g);
         character.draw(g);
-        object.draw(g);
-        object1.draw(g);
-        object2.draw(g);
+        walls0.drawObjects(g);
         enemy1.draw(g);
         enemy2.draw(g);
         character.drawGameOver(g);
@@ -55,25 +46,17 @@ public class MyPanel extends JPanel implements MouseListener {
         long dt = currentTime - previousWorldUpdateTime;
 
         character.update(dt, walls0);
-        //walls0.wallsMoves(dt);
         enemy1.update(dt);
         enemy2.update(dt);
-        enemy1.updateDamage(previousWorldUpdateTime);
-        enemy2.updateDamage(previousWorldUpdateTime);
-        object.update(character.x, character.y);
-        object1.update(character.x, character.y);
-        object2.update(character.x, character.y);
+        enemy1.updateDamage();
+        enemy2.updateDamage();
 
         previousWorldUpdateTime = currentTime;
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        object.open(e, (int) character.x, (int) character.y);
-        object1.open(e, (int) character.x, (int) character.y);
-        object2.open(e, (int) character.x, (int) character.y);
-        eX = e.getX();
-        eY = e.getY();
+        character.open(e, walls0);
         character.damage(enemy1, e);
         character.damage(enemy2, e);
     }
